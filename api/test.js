@@ -3,5 +3,5 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  res.status(200).json({ message: 'Teste de API funcionando!' });
+  return res.status(200).json({ message: 'Teste de API funcionando!' });
 }
