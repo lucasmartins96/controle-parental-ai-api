@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle Parental AI</title>
+  <script src="https://cdn.jsdelivr.net/npm/ua-parser-js/dist/ua-parser.min.js"></script>
+  <script>
+    const parser = new UAParser();
+    const device = parser.getDevice();
+    const os = parser.getOS();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("dispositivo").textContent = `${device.vendor} ${device.model}` || "Desconhecido";
+      document.getElementById("sistema").textContent = `${os.name} ${os.version}` || "Desconhecido";
+    });
+  </script>
+</head>
+
+<body>
+  <h1>Controle Parental AI</h1>
+  <div>
+    <p>
+      Sou um assistente de controle parental alimentado por inteligência artificial. Posso te ajudar a monitorar
+      e controlar o acesso dos seus filhos a conteúdos online, garantindo uma experiência segura e adequada para
+      crianças e adolescentes.
+    </p>
+  </div>
+  <session>
+    <p>
+      Seu dispositivo:
+      <span id="dispositivo">Detectando...</span>
+    </p>
+    <p>
+      Sistema: <span id="sistema">Detectando...</span>
+    </p>
+    <div>
+      <button type="button" id="gerar">Iniciar</button>
+      <button type="button" id="gerar-teste">Teste</button>
+    </div>
+  </session>
+
+  <div id="resultado"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

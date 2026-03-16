@@ -1,0 +1,19 @@
+{
+  "name": "controle-parental-ai",
+  "version": "1.0.0",
+  "description": "Assistente de Controle Parental por IA",
+  "license": "ISC",
+  "author": "Lucas Martins da Silva",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "openai": "^6.25.0"
+  },
+  "devDependencies": {
+    "vercel": "^50.27.0"
+  }
+}
