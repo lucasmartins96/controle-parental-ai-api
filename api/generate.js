@@ -4,15 +4,17 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export default async function POST(request) {
-  if (request.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Método não permitido!' }), {
-      status: 405,
-    });
+export const config = {
+  runtime: 'edge',
+};
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Método não permitido!' });
   }
 
   try {
-    const { messages } = await request.json();
+    const { messages } = req.body;
 
     const stream = await openai.responses.create({
       model: 'gpt-4.1-mini',
@@ -26,29 +28,18 @@ export default async function POST(request) {
       ],
     });
 
-    const reader = stream.getReader();
-    const encoder = new TextEncoder();
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.setHeader('Transfer-Encoding', 'chunked');
 
-    return new Response(
-      new ReadableStream({
-        async start(controller) {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            controller.enqueue(encoder.encode(value));
-          }
-          controller.close();
-        },
-      }),
-      {
-        headers: {
-          'Content-Type': 'text/plain; charset=utf-8',
-          'Transfer-Encoding': 'chunked',
-        },
-      },
-    );
+    for await (const event of stream) {
+      if (event.type === 'response.output_text.delta') {
+        res.write(event.delta);
+      }
+    }
+
+    res.end();
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify({ error: 'Erro interno' }), { status: 500 });
+    res.status(500).json({ error: 'Erro interno' });
   }
 }

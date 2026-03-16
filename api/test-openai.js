@@ -4,9 +4,13 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export default async function POST(request) {
+export const config = {
+  runtime: 'edge',
+};
+
+export default async function handler(req, res) {
   try {
-    const { messages } = await request.json();
+    const { messages } = req.body;
     const response = await openai.responses.create({
       model: 'gpt-5-nano',
       input: [
@@ -20,24 +24,23 @@ export default async function POST(request) {
       stream: true,
     });
 
-    const { readable, writable } = new TransformStream();
-    const writer = writable.getWriter();
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.setHeader('Transfer-Encoding', 'chunked');
 
     for await (const event of response) {
       if (event.type === 'response.output_text.delta') {
-        await writer.write(event.delta);
+        res.write(event.delta);
       }
     }
 
-    writer.close();
-    return new Response(readable, {
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        Connection: 'keep-alive',
-      },
-    });
+    res.end();
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    res.statusCode = 500;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(
+      JSON.stringify({
+        error: error.message,
+      }),
+    );
   }
 }
