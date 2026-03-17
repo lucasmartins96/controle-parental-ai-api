@@ -31,12 +31,14 @@ export default async function handler(req, res) {
 
     res.end();
   } catch (error) {
+    console.error(error);
+
+    if (res.headersSent) {
+      return res.end();
+    }
+
     res.statusCode = 500;
     res.setHeader('Content-Type', 'application/json');
-    res.end(
-      JSON.stringify({
-        error: error.message,
-      }),
-    );
+    return res.end(JSON.stringify({ error: error.message }));
   }
 }
