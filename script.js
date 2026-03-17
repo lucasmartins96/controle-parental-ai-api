@@ -64,7 +64,8 @@ async function gerarTutorialTeste() {
     if (done) break;
 
     const pedaco = decodificador.decode(value);
-    textoCompleto += pedaco;
+    const json = JSON.parse(pedaco.replace('data: ', '').trim());
+    textoCompleto += json.content;
     atualizarTextoNaTela(textoCompleto);
   }
 }
