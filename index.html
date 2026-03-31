@@ -6,42 +6,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Controle Parental AI</title>
   <script src="https://cdn.jsdelivr.net/npm/ua-parser-js/dist/ua-parser.min.js"></script>
-  <script>
-    const parser = new UAParser();
-    const device = parser.getDevice();
-    const os = parser.getOS();
-
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("dispositivo").textContent = `${device.vendor} ${device.model}` || "Desconhecido";
-      document.getElementById("sistema").textContent = `${os.name} ${os.version}` || "Desconhecido";
-    });
-  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-  <h1>Controle Parental AI</h1>
-  <div>
-    <p>
-      Sou um assistente de controle parental alimentado por inteligência artificial. Posso te ajudar a monitorar
-      e controlar o acesso dos seus filhos a conteúdos online, garantindo uma experiência segura e adequada para
-      crianças e adolescentes.
-    </p>
-  </div>
-  <session>
-    <p>
-      Seu dispositivo:
-      <span id="dispositivo">Detectando...</span>
-    </p>
-    <p>
-      Sistema: <span id="sistema">Detectando...</span>
-    </p>
-    <div>
-      <button type="button" id="gerar">Iniciar</button>
-      <button type="button" id="gerar-teste">Teste</button>
-    </div>
-  </session>
+<body class="chat-app">
+  <header class="chat-header">
+    <h1>Controle Parental AI</h1>
+    <section class="introducao">
+      <p>
+        Assistente com IA para ajudar pais a proteger crianças e adolescentes na internet. Aqui você recebe instruções
+        para ativar o controle parental neste dispositivo ou em outro usado por eles.
+      </p>
+    </section>
+  </header>
 
-  <div id="resultado"></div>
+  <form class="device-form" id="device-form">
+    <div class="question-wrapper">
+      <p class="question">Onde você quer receber as instruções para ativar o controle dos pais?</p>
+      <label for="dispositivo-usuario">
+        <input type="radio" name="dispositivo" id="dispositivo-usuario" value="dispositivo-usuario" checked>
+        Neste dispositivo (o que a criança/adolescente usa agora)
+      </label>
+      <label for="dispositivo-outro">
+        <input type="radio" name="dispositivo" id="dispositivo-outro" value="dispositivo-outro">
+        Em outro dispositivo (celular, tablet, etc.)
+      </label>
+      <label id="dispositivo-nome-label" for="dispositivo-nome" class="dispositivo-nome">
+        Nome do dispositivo:
+        <input type="text" name="dispositivo" id="dispositivo-nome" value="Não sei"
+          placeholder="Motorola G60, iPhone 12, etc.">
+        <span>(se não souber, informe como "Não sei")</span>
+      </label>
+    </div>
+    <div class="question-wrapper">
+      <p class="question">Qual a faixa etária da criança/adolescente?</p>
+      <label for="faixa-etaria-0-5">
+        <input type="radio" name="faixa-etaria" id="faixa-etaria-0-5" value="0-5">
+        0 a 5 anos
+      </label>
+      <label for="faixa-etaria-6-12">
+        <input type="radio" name="faixa-etaria" id="faixa-etaria-6-12" value="6-12" checked>
+        6 a 12 anos
+      </label>
+      <label for="faixa-etaria-13-18">
+        <input type="radio" name="faixa-etaria" id="faixa-etaria-13-18" value="13-18">
+        13 a 18 anos
+      </label>
+    </div>
+    <div class="question-wrapper">
+      <p class="question">Quais são as principais preocupações em relação ao acesso online da criança/adolescente?</p>
+      <label for="preocupacao-conteudo-inapropriado">
+        <input type="checkbox" name="preocupacao" id="preocupacao-conteudo-inapropriado" value="conteudo-inapropriado">
+        Conteúdo inapropriado
+      </label>
+      <label for="preocupacao-tempo-tela">
+        <input type="checkbox" name="preocupacao" id="preocupacao-tempo-tela" value="tempo-tela">
+        Tempo de tela excessivo
+      </label>
+      <label for="preocupacao-interacoes-online">
+        <input type="checkbox" name="preocupacao" id="preocupacao-interacoes-online" value="interacoes-online">
+        Interações online com desconhecidos
+      </label>
+    </div>
+
+    <div class="botoes">
+      <button type="submit" id="gerar">Iniciar</button>
+    </div>
+  </form>
 
   <script src="script.js"></script>
 </body>
