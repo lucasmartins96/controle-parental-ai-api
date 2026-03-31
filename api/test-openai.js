@@ -1,5 +1,7 @@
+import dotenv from 'dotenv';
 import OpenAI from 'openai';
 
+dotenv.config({ path: ['.env.local', '.env'] });
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -8,7 +10,7 @@ export default async function handler(req, res) {
   try {
     const { messages } = req.body;
     const response = await openai.responses.create({
-      model: 'gpt-5-nano',
+      model: 'gpt-4.1-nano',
       input: [
         {
           role: 'system',
