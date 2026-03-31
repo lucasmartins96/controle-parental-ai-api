@@ -18,13 +18,15 @@
   --chat-bubble-other: #1f2937;
   --chat-radius: 14px;
   --chat-gap: 0.75rem;
-  --chat-font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --chat-font: "Google Sans", sans-serif;
+  font-size: 16px;
 }
 
 html,
 body {
   width: 100%;
   height: 100%;
+  font-size: 0.875rem;
 }
 
 html {
@@ -39,7 +41,8 @@ body {
   font-family: var(--chat-font);
   background: var(--chat-bg);
   color: var(--chat-text);
-  overflow: hidden;
+  overflow: auto;
+  padding: 1rem;
 }
 
 /* Mídia responsiva */
@@ -104,6 +107,65 @@ a {
   background: var(--chat-surface);
 }
 
+.introducao {
+  max-width: 600px;
+  margin: 1.5rem auto;
+}
+
+.device-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.device-form .botoes {
+  margin: 1rem 0;
+  display: flex;
+  gap: 2rem;
+}
+
+.question-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--chat-text) 12%, transparent);
+}
+
+.question {
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+}
+
+.device-form .botoes button {
+  flex: 1;
+  background-color: var(--chat-primary);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+}
+
+#dispositivo-nome-label {
+  display: none;
+  padding-top: 0.5rem;
+}
+
+#dispositivo-nome-label span {
+  font-size: 0.75rem;
+  color: var(--chat-muted);
+  display: block;
+}
+
+input#dispositivo-nome {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, var(--chat-surface) 85%, black);
+}
+
 .chat-messages {
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -139,6 +201,7 @@ a {
   padding: 0.75rem;
   border-top: 1px solid color-mix(in oklab, var(--chat-text) 12%, transparent);
   background: var(--chat-surface);
+  min-height: 3.5rem;
 }
 
 .chat-input textarea,
