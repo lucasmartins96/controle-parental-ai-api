@@ -246,9 +246,8 @@ function criarElementoMensagem(role, content) {
 
 function renderizarHistorico() {
   const container = document.querySelector('.chat-messages');
-  const areaDeEntrada = container?.querySelector('.chat-input');
 
-  if (!container || !areaDeEntrada) {
+  if (!container) {
     return;
   }
 
@@ -261,21 +260,20 @@ function renderizarHistorico() {
     fragmento.appendChild(criarElementoMensagem(mensagem.role, mensagem.content));
   });
 
-  container.insertBefore(fragmento, areaDeEntrada);
+  container.appendChild(fragmento);
   container.scrollTop = container.scrollHeight;
 }
 
 function adicionarPlaceholderDeResposta() {
   const container = document.querySelector('.chat-messages');
-  const areaDeEntrada = container?.querySelector('.chat-input');
 
-  if (!container || !areaDeEntrada) {
+  if (!container) {
     return null;
   }
 
   const placeholder = criarElementoMensagem('assistant', '');
   placeholder.dataset.streaming = 'true';
-  container.insertBefore(placeholder, areaDeEntrada);
+  container.appendChild(placeholder);
   container.scrollTop = container.scrollHeight;
   return placeholder;
 }
