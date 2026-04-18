@@ -16,6 +16,19 @@ Suas respostas devem ser:
 
 const SUPPORTED_ROLES = new Set(['user', 'assistant', 'system', 'developer']);
 
+function criarItemMensagem(message) {
+  return {
+    type: 'message',
+    role: message.role,
+    content: [
+      {
+        type: 'input_text',
+        text: message.content,
+      },
+    ],
+  };
+}
+
 function extrairTexto(content) {
   if (typeof content === 'string') {
     return content.trim();
@@ -68,15 +81,37 @@ function normalizarMensagens(messages) {
     .filter(Boolean);
 }
 
+async function obterConversation({
+  conversationId,
+  conversationHistory,
+  reutilizarExistente,
+}) {
+  if (
+    reutilizarExistente &&
+    typeof conversationId === 'string' &&
+    conversationId.trim()
+  ) {
+    return openai.conversations.retrieve(conversationId.trim());
+  }
+
+  return openai.conversations.create({
+    items: conversationHistory.map(criarItemMensagem),
+  });
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método não permitido!' });
   }
 
   try {
-    const { messages, history, message } = req.body ?? {};
+    const { messages, history, message, conversationId } = req.body ?? {};
     const conversationHistory = normalizarMensagens(messages ?? history);
     const latestMessage = typeof message === 'string' ? message.trim() : '';
+    const reutilizarConversation =
+      Boolean(latestMessage) &&
+      typeof conversationId === 'string' &&
+      Boolean(conversationId.trim());
 
     if (
       latestMessage &&
@@ -96,27 +131,37 @@ export default async function handler(req, res) {
       });
     }
 
-    const stream = await openai.chat.completions.create({
+    const conversation = await obterConversation({
+      conversationId,
+      conversationHistory,
+      reutilizarExistente: reutilizarConversation,
+    });
+
+    const input = reutilizarConversation
+      ? [
+          criarItemMensagem({
+            role: 'user',
+            content: latestMessage,
+          }),
+        ]
+      : [];
+
+    const stream = await openai.responses.create({
       model: 'gpt-4.1-nano',
       stream: true,
-      messages: [
-        {
-          role: 'system',
-          content: SYSTEM_PROMPT,
-        },
-        ...conversationHistory,
-      ],
+      instructions: SYSTEM_PROMPT,
+      conversation: { id: conversation.id },
+      input,
     });
 
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Transfer-Encoding', 'chunked');
     res.setHeader('Cache-Control', 'no-cache, no-transform');
+    res.setHeader('X-Conversation-Id', conversation.id);
 
-    for await (const chunk of stream) {
-      const delta = chunk.choices?.[0]?.delta?.content;
-
-      if (delta) {
-        res.write(delta);
+    for await (const event of stream) {
+      if (event.type === 'response.output_text.delta') {
+        res.write(event.delta);
       }
     }
 
