@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle Parental AI - Reiniciar conversa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/pre-reset.css">
+</head>
+
+<body class="chat-app-wrapper pre-reset-page">
+  <main class="chat-expired-card">
+    <span class="chat-expired-card__eyebrow">Conversa encerrada</span>
+    <h1 id="pre-reset-title">Esta conversa atingiu o limite de duração</h1>
+    <p id="pre-reset-description">
+      O chat foi encerrado. Você pode iniciar uma nova conversa com as mesmas configurações ou voltar para o início.
+    </p>
+    <div class="chat-expired-card__actions">
+      <button type="button" id="restart-chat">Reiniciar com as mesmas configurações</button>
+      <button type="button" id="back-to-index" class="button-secondary">Voltar para o início</button>
+    </div>
+  </main>
+
+  <script type="module" src="js/pre-reset.js"></script>
+</body>
+
+</html>
