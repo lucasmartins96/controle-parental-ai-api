@@ -10,11 +10,18 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/chat.css">
 </head>
 
 <body class="chat-app-wrapper--full">
-  <div class="chat-messages"></div>
+  <div class="chat-messages">
+    <aside class="material-alert chat-limit-alert" id="chat-limit-alert" hidden>
+      <div class="material-alert__body">
+        <strong class="material-alert__title">Limite de Utilização</strong>
+        <p id="chat-limit-alert-text"></p>
+      </div>
+    </aside>
+  </div>
   <div class="chat-input">
     <textarea name="txt-area" id="txt-area" rows="2" placeholder="Digite sua mensagem..."></textarea>
     <button type="button" id="send">
@@ -22,7 +29,7 @@
     </button>
   </div>
 
-  <script src="script.js"></script>
+  <script type="module" src="js/chat.js"></script>
 </body>
 
 </html>
