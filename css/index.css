@@ -1,0 +1,112 @@
+@import './base.css';
+
+.chat-app-wrapper {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+  background: var(--chat-bubble-other);
+
+  @media (min-width: 425px) {
+    padding: 1rem 0;
+    align-items: center;
+    background-color: var(--chat-bg);
+  }
+}
+
+.chat-app {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 1rem;
+
+  @media (min-width: 425px) {
+    max-width: 425px;
+    margin: 0 auto;
+    border-radius: var(--chat-radius);
+    overflow: hidden;
+    background: var(--chat-bubble-other);
+  }
+
+  @media (min-height: 800px) {
+    height: 800px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 550px;
+    overflow: auto;
+  }
+}
+
+.chat-header {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--chat-text) 12%, transparent);
+}
+
+.chat-header h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.introducao {
+  max-width: 600px;
+  padding: 1.5rem 0;
+  line-height: 1.6;
+  word-spacing: 0.02em;
+}
+
+.device-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.device-form .botoes {
+  margin: 1rem 0;
+  display: flex;
+  gap: 2rem;
+}
+
+.question-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--chat-text) 12%, transparent);
+}
+
+.question {
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+}
+
+.device-form .botoes button {
+  flex: 1;
+  background-color: var(--chat-primary);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+}
+
+#dispositivo-nome-label {
+  display: none;
+  padding-top: 0.5rem;
+}
+
+#dispositivo-nome-label span {
+  font-size: 0.75rem;
+  color: var(--chat-muted);
+  display: block;
+}
+
+input#dispositivo-nome {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, var(--chat-surface) 85%, black);
+}
