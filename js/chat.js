@@ -21,6 +21,70 @@ const formatadorDeDataHora = new Intl.DateTimeFormat('pt-BR', {
   timeStyle: 'short',
 });
 
+function obterContainerDeMensagens() {
+  return document.querySelector('.chat-messages');
+}
+
+function estaPertoDoFim() {
+  const container = obterContainerDeMensagens();
+
+  if (!container) {
+    return false;
+  }
+
+  const distanciaDoFim = container.scrollHeight - container.clientHeight - container.scrollTop;
+  return distanciaDoFim <= 48;
+}
+
+function rolarParaUltimaMensagem(comportamento = 'auto') {
+  const container = obterContainerDeMensagens();
+
+  if (!container) {
+    return;
+  }
+
+  container.scrollTo({
+    top: container.scrollHeight,
+    behavior: comportamento,
+  });
+}
+
+function atualizarViewportDoChat() {
+  const viewport = window.visualViewport;
+  const altura = viewport?.height ?? window.innerHeight;
+
+  document.documentElement.style.setProperty(
+    '--chat-viewport-height',
+    `${Math.round(altura)}px`,
+  );
+}
+
+function sincronizarAlturaDoComposer() {
+  const composer = document.querySelector('.chat-input');
+
+  if (!composer) {
+    return;
+  }
+
+  document.documentElement.style.setProperty(
+    '--chat-input-height',
+    `${Math.round(composer.offsetHeight)}px`,
+  );
+}
+
+function ajustarViewportERolagem(comportamento = 'auto') {
+  atualizarViewportDoChat();
+  sincronizarAlturaDoComposer();
+  requestAnimationFrame(() => {
+    rolarParaUltimaMensagem(comportamento);
+  });
+}
+
+function ajustarViewportDoChatSemForcarScroll() {
+  atualizarViewportDoChat();
+  sincronizarAlturaDoComposer();
+}
+
 function renderizarAlertaDoLimite(configDoChat) {
   const alerta = document.getElementById('chat-limit-alert');
   const texto = document.getElementById('chat-limit-alert-text');
@@ -55,7 +119,8 @@ function criarElementoMensagem(role, content) {
 }
 
 function renderizarHistorico() {
-  const container = document.querySelector('.chat-messages');
+  const container = obterContainerDeMensagens();
+  const deveManterNoFim = estaPertoDoFim();
 
   if (!container) {
     return;
@@ -71,11 +136,14 @@ function renderizarHistorico() {
   });
 
   container.appendChild(fragmento);
-  container.scrollTop = container.scrollHeight;
+
+  if (deveManterNoFim) {
+    rolarParaUltimaMensagem();
+  }
 }
 
 function adicionarPlaceholderDeResposta() {
-  const container = document.querySelector('.chat-messages');
+  const container = obterContainerDeMensagens();
 
   if (!container) {
     return null;
@@ -84,7 +152,7 @@ function adicionarPlaceholderDeResposta() {
   const placeholder = criarElementoMensagem('assistant', '');
   placeholder.dataset.streaming = 'true';
   container.appendChild(placeholder);
-  container.scrollTop = container.scrollHeight;
+  rolarParaUltimaMensagem();
   return placeholder;
 }
 
@@ -177,7 +245,10 @@ async function enviarConversa(opcoes = {}) {
 
       if (placeholder) {
         placeholder.textContent = textoCompleto;
-        placeholder.parentElement.scrollTop = placeholder.parentElement.scrollHeight;
+
+        if (estaPertoDoFim()) {
+          rolarParaUltimaMensagem();
+        }
       }
     }
 
@@ -246,6 +317,7 @@ async function inicializarChat() {
 
   renderizarHistorico();
   renderizarAlertaDoLimite(configDoChat);
+  ajustarViewportERolagem();
 
   const botaoEnviar = document.getElementById('send');
   const textarea = document.getElementById('txt-area');
@@ -279,6 +351,27 @@ async function inicializarChat() {
     textarea.value = '';
     await enviarConversa();
   });
+
+  const reagirAoFocoNoCampo = () => {
+    ajustarViewportERolagem('smooth');
+  };
+
+  textarea.addEventListener('focus', reagirAoFocoNoCampo);
+  textarea.addEventListener('click', reagirAoFocoNoCampo);
+
+  window.addEventListener('resize', () => {
+    ajustarViewportDoChatSemForcarScroll();
+  });
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', () => {
+      ajustarViewportDoChatSemForcarScroll();
+    });
+
+    window.visualViewport.addEventListener('scroll', () => {
+      ajustarViewportDoChatSemForcarScroll();
+    });
+  }
 
   if (!conversa.some((mensagem) => mensagem.role === 'assistant')) {
     enviarConversa({ permitirInicioOculto: true });
