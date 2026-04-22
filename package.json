@@ -16,6 +16,6 @@
     "openai": "^6.25.0"
   },
   "devDependencies": {
-    "vercel": "^51.2.0"
+    "vercel": "^52.0.0"
   }
 }
