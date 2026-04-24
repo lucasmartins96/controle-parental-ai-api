@@ -75,6 +75,32 @@
   font-size: 0.95rem;
 }
 
+.material-alert__list {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.material-alert__list li {
+  margin-bottom: 0.25rem;
+}
+
+.material-alert__list li:last-child {
+  margin-bottom: 0;
+}
+
+.material-alert__list a {
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: underline;
+}
+
+.material-alert__list a:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.material-alert__list p {
+  color: rgba(239, 246, 255, 0.92);
+}
+
 .material-alert__body p {
   color: rgba(239, 246, 255, 0.92);
 }
