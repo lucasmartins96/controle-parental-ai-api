@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle Parental AI - Ajuda e Sugestões</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/help.css" />
+  </head>
+
+  <body>
+    <main class="help-page">
+      <section class="help-panel" aria-labelledby="help-title">
+        <header class="help-header">
+          <h1 id="help-title">Ajuda e Sugestões</h1>
+          <p class="help-description">
+            Use este formulário para pedir ajuda, reportar um problema ou enviar uma
+            sugestão. As informações serão registradas para acompanhamento.
+          </p>
+        </header>
+
+        <form class="help-form" id="help-form" novalidate>
+          <div class="help-honeypot" aria-hidden="true">
+            <label for="contact-company">Empresa</label>
+            <input
+              type="text"
+              id="contact-company"
+              name="company"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="help-field">
+            <label for="issue-type">Tipo de contato</label>
+            <select id="issue-type" name="type" required>
+              <option value="">Selecione uma opção</option>
+              <option value="ajuda">Ajuda</option>
+              <option value="problema">Problema</option>
+              <option value="sugestao">Sugestão</option>
+            </select>
+          </div>
+
+          <div class="help-field">
+            <label for="contact-email">Email para contato <span>(opcional)</span></label>
+            <input
+              type="email"
+              id="contact-email"
+              name="email"
+              placeholder="voce@exemplo.com"
+              inputmode="email"
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="help-field">
+            <label for="issue-description">Descrição</label>
+            <textarea
+              id="issue-description"
+              name="description"
+              rows="8"
+              maxlength="5000"
+              placeholder="Explique com detalhes o que você precisa, o problema encontrado ou a sugestão que quer registrar."
+              required
+            ></textarea>
+            <p class="help-field-hint">
+              Quanto mais contexto você informar, mais fácil fica acompanhar a
+              solicitação.
+            </p>
+          </div>
+
+          <p class="help-feedback" id="help-feedback" hidden></p>
+
+          <div class="help-actions">
+            <button
+              class="help-button help-button--primary"
+              type="submit"
+              id="help-submit"
+            >
+              Enviar
+            </button>
+            <button
+              class="help-button help-button--secondary"
+              type="button"
+              id="help-cancel"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <div class="help-modal" id="help-modal" hidden>
+      <div class="help-modal__backdrop" data-close-modal="true"></div>
+      <section
+        class="help-modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="help-modal-title"
+        aria-describedby="help-modal-message"
+      >
+        <p class="help-modal__status" id="help-modal-status"></p>
+        <h2 id="help-modal-title"></h2>
+        <p id="help-modal-message"></p>
+        <div class="help-modal__actions">
+          <a
+            class="help-button help-button--primary"
+            id="help-modal-link"
+            href="chat.html"
+          >
+            Retornar ao chat
+          </a>
+          <button
+            class="help-button help-button--secondary"
+            id="help-modal-close"
+            type="button"
+          >
+            Fechar
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script type="module" src="js/help.js"></script>
+  </body>
+</html>
