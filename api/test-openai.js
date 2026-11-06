@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   try {
     const { messages } = req.body;
     const response = await openai.responses.create({
-      model: 'gpt-4.1-nano',
+      model: 'gpt-5-nano',
       input: [
         {
           role: 'system',

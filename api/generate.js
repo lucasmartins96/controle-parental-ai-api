@@ -147,7 +147,7 @@ export default async function handler(req, res) {
       : [];
 
     const stream = await openai.responses.create({
-      model: 'gpt-4.1-nano',
+      model: 'gpt-5-nano',
       stream: true,
       instructions: SYSTEM_PROMPT,
       conversation: { id: conversation.id },
