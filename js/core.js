@@ -323,3 +323,24 @@ export function atualizarTextoDoLimiteNaTelaDeReset(configDoChat) {
     descricao.textContent = `O chat foi encerrado após ${formatarQuantidadeDeDias(configDoChat.conversationLimitDays)}. Você pode iniciar uma nova conversa com as mesmas configurações ou voltar para o início.`;
   }
 }
+
+export function registrarServiceWorker() {
+  if (typeof window === 'undefined' || !('serviceWorker' in navigator)) {
+    return;
+  }
+
+  const registrar = () => {
+    navigator.serviceWorker.register('/sw.js').catch((error) => {
+      console.error('Falha ao registrar o Service Worker:', error);
+    });
+  };
+
+  if (document.readyState === 'complete') {
+    registrar();
+    return;
+  }
+
+  window.addEventListener('load', registrar, { once: true });
+}
+
+registrarServiceWorker();

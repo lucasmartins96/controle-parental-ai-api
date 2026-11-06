@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  <path
+    d="M256 88L120 144v104c0 95.2 58.1 183.7 136 216 77.9-32.3 136-120.8 136-216V144L256 88z"
+    fill="url(#shieldGrad)"
+  />
+  <path
+    d="M256 120L148 164.5v83.5c0 76.5 46.1 148.1 108 175.4 61.9-27.3 108-98.9 108-175.4v-83.5L256 120z"
+    fill="#0f172a"
+    fill-opacity="0.22"
+  />
+  <path
+    d="M232 308l-52-52 22.6-22.6L232 262.8l77.4-77.4L332 208l-100 100z"
+    fill="#ffffff"
+  />
+  <path
+    d="M356 116l10 24 24 10-24 10-10 24-10-24-24-10 24-10 10-24z"
+    fill="#93c5fd"
+  />
+</svg>
