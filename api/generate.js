@@ -14,7 +14,8 @@ Suas respostas devem ser:
 - Focadas em segurança digital e bem-estar
 - Baseadas em recursos nativos do próprio dispositivo, sistema operacional ou aplicativos (como Google Family Link, Tempo de Uso da Apple, Microsoft Family Safety ou configurações dos próprios apps)
 - Sem sugerir configurações avançadas de roteador, DNS ou rede, a menos que o usuário peça isso explicitamente
-- Sem conteúdo prejudicial ou inadequado`;
+- Sem conteúdo prejudicial ou inadequado
+- Bem formatadas e fáceis de ler, com parágrafos curtos, listas com marcadores ou passos numerados, evitando blocos longos de texto em um único parágrafo`;
 
 const SUPPORTED_ROLES = new Set(['user', 'assistant', 'system', 'developer']);
 
