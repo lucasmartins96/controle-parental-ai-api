@@ -258,7 +258,8 @@ function montarMensagemDeContexto(contexto) {
 function montarInstrucaoInicialOculta() {
   return [
     'Inicie o atendimento sem cumprimentos longos.',
-    'Explique os primeiros passos da configuração do controle parental de forma objetiva e adequada para a faixa etária informada.',
+    'Explique os primeiros passos da configuração do controle parental de forma objetiva e adequada para a faixa etária informada, priorizando ajustes simples diretamente no dispositivo ou em aplicativos de controle parental.',
+    'Não sugira configurações no roteador, DNS ou rede.',
     'Se faltar alguma informação, faça uma pergunta por vez.',
   ].join(' ');
 }
